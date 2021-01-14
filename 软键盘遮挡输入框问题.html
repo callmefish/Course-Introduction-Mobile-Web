@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<input type="text"/>
+<script>
+{
+    let input = document.querySelector("input");
+    let oldY = 0;
+    input.onfocus = ()=>{
+        // 软键盘弹出之前的top
+        let startTop = input.getBoundingClientRect().top;
+        setTimeout(() => {
+            let nowTop = input.getBoundingClientRect().top;
+            if(nowTop - startTop > 10){
+                return false;
+            }
+            if(nowTop > window.innerHeight/2){
+                // 移动距离
+                oldY = (nowTop - window.innerHeight/2) - input.offsetHeight - 10;
+                input.style.transform = "translateY(-" + oldY + "px)";
+            }
+        }, 400);
+    }
+    input.onblur = ()=>{
+        if(oldY){
+            input.style.transform = "translateY(" + 0 + "px)";
+        }
+    }
+}
+</script>
+</body>
+</html>
